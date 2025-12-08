@@ -43,6 +43,6 @@ export class LoginPage {
         await this.loginButton.click();
 
         // Verify successful login by checking for the presence of the products page title
-        await expect(this.page.locator('.error-message-container error')).toContainText('Username and password do not match any user in this service');
+        await expect(this.page.locator('.error-message-container')).toContainText('Username and password do not match any user in this service');
     }
 }
