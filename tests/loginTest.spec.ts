@@ -13,3 +13,10 @@ test('successful login with valid credentials', async ({ page }) => {
     await loginPage.loginWithCorrectCreds(username, password);
     // await loginPage.loginWithCorrectCreds(users.standard_user.username, users.standard_user.password);
 });
+
+test('login with invalid credentials', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const { username, password } = users.invalid_user;
+    await loginPage.loginWithInvalidCreds(username, password);
+    // await loginPage.loginWithCorrectCreds(users.standard_user.username, users.standard_user.password);
+});

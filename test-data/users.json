@@ -8,5 +8,10 @@
     "username": "visual_user",
     "password": "secret_sauce",
     "role": "visual-user"
+    },
+    "invalid_user": {
+    "username": "invalid_user",
+    "password": "secret_sauce",
+    "role": "invalid-user"
     }
 }

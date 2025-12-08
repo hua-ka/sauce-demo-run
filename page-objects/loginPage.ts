@@ -36,4 +36,13 @@ export class LoginPage {
         // Verify successful login by checking for the presence of the products page title
         await expect(this.page.getByText('Products')).toBeVisible();
     }
+
+    async loginWithInvalidCreds(username: string, password: string): Promise<void> {
+        await this.username.fill(username);
+        await this.password.fill(password);
+        await this.loginButton.click();
+
+        // Verify successful login by checking for the presence of the products page title
+        await expect(this.page.locator('.error-message-container error')).toContainText('Username and password do not match any user in this service');
+    }
 }
