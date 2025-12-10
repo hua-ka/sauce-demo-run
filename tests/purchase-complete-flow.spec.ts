@@ -1,13 +1,13 @@
-import { test, Page, expect} from '@playwright/test';
-import { LoginPage } from '../page-objects/loginPage';  
-import users from '../test-data/users.json';
-import { ProductsPage } from '../page-objects/productsPage';
-import { YourCartPage } from '../page-objects/yourCartPage';
-import { CheckoutPage } from '../page-objects/checkoutPage';
-import { CheckoutOverviewPage } from '../page-objects/checkoutOverviewPage';
+import { test, Page, expect } from '@playwright/test';
+import { LoginPage } from '../src/page-objects/loginPage';
+import users from '../src/test-data/users.json';
+import { ProductsPage } from '../src/page-objects/productsPage';
+import { YourCartPage } from '../src/page-objects/yourCartPage';
+import { CheckoutPage } from '../src/page-objects/checkoutPage';
+import { CheckoutOverviewPage } from '../src/page-objects/checkoutOverviewPage';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
+    await page.goto('https://www.saucedemo.com/');
 })
 
 test('complete purchase flow with first item from the page', async ({ page }) => {
