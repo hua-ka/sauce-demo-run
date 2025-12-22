@@ -13,6 +13,13 @@ pipeline {
                 cleanWs() 
             }
         }
+        
+        stage('Checkout source code') {
+            steps { 
+                echo 'Checking out the code from the repository'
+                checkout scm 
+            }
+        }
 
         stage('Verify Environment') {
             steps {
@@ -20,13 +27,6 @@ pipeline {
                 sh 'which node && node -v'
                 echo 'Checking npm path and version'
                 sh 'which npm && npm -v'
-            }
-        }
-
-        stage('Checkout source code') {
-            steps { 
-                echo 'Checking out the code from the repository'
-                checkout scm 
             }
         }
 
@@ -50,7 +50,7 @@ pipeline {
         }
     }
 
-  post {
+    post {
         always {
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
