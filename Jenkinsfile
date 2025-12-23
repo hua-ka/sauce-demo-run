@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.50.0-jammy'
+            args '--ipc=host'
+        }
+    }
 
     options { timestamps() }
 
@@ -23,10 +28,10 @@ pipeline {
 
         stage('Verify Environment') {
             steps {
-                echo 'Checking Node.js version'
-                sh 'node -v'
-                echo 'Checking npm version'
-                sh 'npm -v'
+                echo 'Checking Node.js path and version'
+                sh 'which node && node -v'
+                echo 'Checking npm path and version'
+                sh 'which npm && npm -v'
             }
         }
 
