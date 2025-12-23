@@ -23,10 +23,10 @@ pipeline {
 
         stage('Verify Environment') {
             steps {
-                echo 'Checking Node.js path and version'
-                sh 'which node && node -v'
-                echo 'Checking npm path and version'
-                sh 'which npm && npm -v'
+                echo 'Checking Node.js version'
+                sh 'node -v'
+                echo 'Checking npm version'
+                sh 'npm -v'
             }
         }
 
