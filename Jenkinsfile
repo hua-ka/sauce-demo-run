@@ -3,9 +3,9 @@ pipeline {
 
     options { timestamps() }
 
-    // tools {
-    //     nodejs 'Node_20' 
-    // }
+    tools {
+        nodejs 'Node_20' 
+    }
 
     stages {
         stage('Clean workspace (Start)') {
