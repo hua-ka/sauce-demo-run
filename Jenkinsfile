@@ -9,7 +9,7 @@ pipeline {
     }
 
     options { timestamps() }
-    
+
     tools {
         nodejs 'Node_20' 
     }
