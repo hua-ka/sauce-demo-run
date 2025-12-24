@@ -1,11 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
-            args '--ipc=host'
-        }
-    }
-    // agent { label 'docker-agent' }
+    // agent {
+    //     docker {
+    //         image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+    //         args '--ipc=host'
+    //     }
+    // }
+    agent { label 'docker-agent' }
     options { timestamps() }
     tools {
         nodejs 'Node_20' 
