@@ -16,6 +16,7 @@ pipeline {
                 cleanWs()
             }
         }
+        stage('Docker sanity') { steps { sh 'which docker && docker --version' }
         stage('Checkout source code') { steps { checkout scm } }
 
         stage('Install playwright') {
