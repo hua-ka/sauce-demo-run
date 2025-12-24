@@ -8,9 +8,17 @@ pipeline {
     stages {
         stage('Clean workspace') { steps { cleanWs() } }
 
-        stage('Checkout source code') { steps { checkout scm } }
+        // stage('Checkout source code') { steps { checkout scm } }
 
-        stage('Verify Environment (inside Playwright image)') {
+        stage('Install playwright') {
+            steps {
+                sh '''
+                    npm i -D @playwright/test
+                    npx playwright install
+                '''
+            }
+        }
+
         steps {
             sh '''
                 echo "Node:" && node -v && which node
@@ -23,9 +31,7 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                sh '''
-                    bash -lc "npm ci && npx playwright test"
-                '''
+                sh 'npx playwright test'
             }
         }
     }
