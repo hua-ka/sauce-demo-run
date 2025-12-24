@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clean workspace') { steps { cleanWs() } }
 
-        // stage('Checkout source code') { steps { checkout scm } }
+        stage('Checkout source code') { steps { checkout scm } }
 
         stage('Install playwright') {
             steps {
