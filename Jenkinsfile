@@ -1,9 +1,9 @@
 pipeline {
     agent { label 'docker-agent' }
     options { timestamps() }
-    // tools {
-    //     nodejs 'Node_20' 
-    // }
+    tools {
+        nodejs 'Node_20' 
+    }
 
     stages {
         stage('Clean workspace') { steps { cleanWs() } }
