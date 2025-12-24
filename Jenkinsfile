@@ -1,13 +1,16 @@
 pipeline {
-    agent { docker { image 'mcr.microsoft.com/playwright:v1.57.0-noble' } }
+    agent { 
+        docker { 
+            image 'mcr.microsoft.com/playwright:v1.57.0-jammy'
+            args '--ipc=host' 
+        } 
+    }
     options { timestamps() }
     tools {
         nodejs 'Node_20' 
     }
 
     stages {
-        stage('Clean workspace') { steps { cleanWs() } }
-
         // stage('Checkout source code') { steps { checkout scm } }
 
         stage('Install playwright') {
