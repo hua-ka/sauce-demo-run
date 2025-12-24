@@ -1,54 +1,40 @@
-pipeline {
+pipeline { 
     agent {
         docker {
-            image 'mcr.microsoft.com/playwright:v1.50.0-jammy'
+            image 'mcr.microsoft.com/playwright:v1.57.0-jammy'
             args '--ipc=host'
         }
     }
 
     options { timestamps() }
 
-    tools {
-        nodejs 'Node_20' 
-    }
-
     stages {
-        stage('Clean workspace (Start)') {
-            steps { 
-                cleanWs() 
+        stage('Clean workspace') {
+            steps {
+                cleanWs()
             }
         }
-        
         stage('Checkout source code') {
-            steps { 
-                echo 'Checking out the code from the repository'
-                checkout scm 
+            steps {
+                checkout scm
             }
         }
-
         stage('Verify Environment') {
             steps {
-                echo 'Checking Node.js path and version'
-                sh 'which node && node -v'
-                echo 'Checking npm path and version'
-                sh 'which npm && npm -v'
+                sh '''
+                set -e
+                echo "Node:" && node -v && which node
+                echo "npm:"  && npm -v  && which npm
+                echo "Playwright:" && npx playwright --version
+                '''
             }
         }
-
         stage('Install Dependencies') {
             steps {
-                echo 'Clean and install dependencies'
                 sh 'npm ci'
             }
         }
-
-        stage('Install Playwright Browsers') {
-            steps {
-                sh 'npx playwright install'
-            }
-        }
-
-        stage('Run Tests') {
+        stage('Run Playwright Tests') {
             steps {
                 sh 'npx playwright test'
             }
