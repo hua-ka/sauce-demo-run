@@ -1,9 +1,8 @@
 pipeline {
-    agent { label 'docker-agent' }
+    agent { docker { image 'mcr.microsoft.com/playwright:v1.57.0-noble' } }
     options { timestamps() }
-
-    environment {
-        pw_image = 'mcr.microsoft.com/playwright:v1.57.0-jammy'
+    tools {
+        nodejs 'Node_20' 
     }
 
     stages {
@@ -14,11 +13,6 @@ pipeline {
         stage('Verify Environment (inside Playwright image)') {
         steps {
             sh '''
-            docker run --rm --init --ipc=host \
-                -v "$WORKSPACE:/work" -w /work \
-                '"$pw_image"' \
-                bash -lc '
-                set -e
                 echo "Node:" && node -v && which node
                 echo "npm:"  && npm -v  && which npm
                 echo "Playwright:" && npx playwright --version
@@ -30,9 +24,6 @@ pipeline {
         stage('Run Playwright Tests') {
             steps {
                 sh '''
-                docker run --rm --init --ipc=host \
-                    -v "$WORKSPACE:/work" -w /work \
-                    '"$pw_image"' \
                     bash -lc "npm ci && npx playwright test"
                 '''
             }
