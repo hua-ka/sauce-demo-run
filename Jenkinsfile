@@ -3,7 +3,7 @@ pipeline {
     options { timestamps() }
 
     environment {
-        PW_IMAGE = 'mcr.microsoft.com/playwright:v1.57.0-jammy'
+        pw_image = 'mcr.microsoft.com/playwright:v1.57.0-jammy'
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
             sh '''
             docker run --rm --init --ipc=host \
                 -v "$WORKSPACE:/work" -w /work \
-                '"$PW_IMAGE"' \
+                '"$pw_image"' \
                 bash -lc '
                 set -e
                 echo "Node:" && node -v && which node
@@ -32,7 +32,7 @@ pipeline {
                 sh '''
                 docker run --rm --init --ipc=host \
                     -v "$WORKSPACE:/work" -w /work \
-                    '"$PW_IMAGE"' \
+                    '"$pw_image"' \
                     bash -lc "npm ci && npx playwright test"
                 '''
             }
