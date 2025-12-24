@@ -1,5 +1,11 @@
 pipeline {
-    agent { label 'docker-agent' }
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            args '--ipc=host'
+        }
+    }
+    // agent { label 'docker-agent' }
     options { timestamps() }
     tools {
         nodejs 'Node_20' 
@@ -31,7 +37,7 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                sh 'npx playwright test'
+                sh 'npx playwright test --project=chromium'
             }
         }
     }
