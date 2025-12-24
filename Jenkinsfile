@@ -16,7 +16,16 @@ pipeline {
                 cleanWs()
             }
         }
-        stage('Docker sanity') { steps { sh 'which docker && docker --version' }}
+        stage('Docker sanity') {
+    steps {
+      sh '''
+        set -eux
+        echo "NODE=$NODE_NAME"
+        which docker
+        docker --version
+      '''
+    }
+  }
         stage('Checkout source code') { steps { checkout scm } }
 
         stage('Install playwright') {
