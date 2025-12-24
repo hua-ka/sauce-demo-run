@@ -11,7 +11,7 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout source code') { steps { checkout scm } }
+        stage('Checkout source code') { steps { checkout scm } }
 
         stage('Install playwright') {
             steps {
