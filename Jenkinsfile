@@ -19,15 +19,15 @@ pipeline {
             }
         }
 
-        steps {
-            sh '''
-                echo "Node:" && node -v && which node
-                echo "npm:"  && npm -v  && which npm
-                echo "Playwright:" && npx playwright --version
-                '
-            '''
+        stage('Verify Environment (inside Playwright image)') {
+            steps {
+                sh '''
+                    echo "Node:" && node -v && which node
+                    echo "npm:"  && npm -v  && which npm
+                    echo "Playwright:" && npx playwright --version
+                '''
+            }
         }
-    }
 
         stage('Run Playwright Tests') {
             steps {
