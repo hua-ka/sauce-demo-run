@@ -6,7 +6,6 @@ pipeline {
             label 'docker-agent'
         }
     }
-    // agent { label 'docker-agent' }
     options { timestamps() }
     tools {
         nodejs 'Node_20' 
@@ -16,15 +15,6 @@ pipeline {
         stage('Clean workspace') { steps { cleanWs() } }
 
         stage('Checkout source code') { steps { checkout scm } }
-
-        // stage('Install playwright') {
-        //     steps {
-        //         sh '''
-        //             npm i -D @playwright/test
-        //             npx playwright install
-        //         '''
-        //     }
-        // }
 
         stage('Verify Environment (inside Playwright image)') {
             steps {
@@ -49,7 +39,8 @@ pipeline {
         }
         stage('Run Playwright Tests') {
             steps {
-                sh 'npx playwright test --project=chromium'
+                sh 'npx playwright test'
+                // sh 'npx playwright test --project=chromium'
             }
         }
     }
