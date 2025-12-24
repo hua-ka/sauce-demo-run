@@ -1,32 +1,14 @@
 pipeline {
-    agent { 
-        docker { 
-            image 'mcr.microsoft.com/playwright:v1.57.0-jammy'
-            args '--ipc=host' 
-        } 
-    }
+    agent { label 'docker-agent' }
     options { timestamps() }
-    tools {
-        nodejs 'Node_20' 
-    }
+    // tools {
+    //     nodejs 'Node_20' 
+    // }
 
     stages {
-        stage('Clean workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-        stage('Docker sanity') {
-    steps {
-      sh '''
-        set -eux
-        echo "NODE=$NODE_NAME"
-        which docker
-        docker --version
-      '''
-    }
-  }
-        stage('Checkout source code') { steps { checkout scm } }
+        stage('Clean workspace') { steps { cleanWs() } }
+
+        // stage('Checkout source code') { steps { checkout scm } }
 
         stage('Install playwright') {
             steps {
