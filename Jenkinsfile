@@ -1,11 +1,12 @@
 pipeline {
-    // agent {
-    //     docker {
-    //         image 'mcr.microsoft.com/playwright:v1.57.0-noble'
-    //         args '--ipc=host'
-    //     }
-    // }
-    agent { label 'docker-agent' }
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            args '--ipc=host'
+            label 'docker-agent'
+        }
+    }
+    // agent { label 'docker-agent' }
     options { timestamps() }
     tools {
         nodejs 'Node_20' 
@@ -16,14 +17,14 @@ pipeline {
 
         stage('Checkout source code') { steps { checkout scm } }
 
-        stage('Install playwright') {
-            steps {
-                sh '''
-                    npm i -D @playwright/test
-                    npx playwright install
-                '''
-            }
-        }
+        // stage('Install playwright') {
+        //     steps {
+        //         sh '''
+        //             npm i -D @playwright/test
+        //             npx playwright install
+        //         '''
+        //     }
+        // }
 
         stage('Verify Environment (inside Playwright image)') {
             steps {
@@ -34,7 +35,18 @@ pipeline {
                 '''
             }
         }
-
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                    set -eux
+                    if [ -f package-lock.json ]; then
+                        npm ci
+                    else
+                        npm install
+                    fi
+                '''
+            }
+        }
         stage('Run Playwright Tests') {
             steps {
                 sh 'npx playwright test --project=chromium'
