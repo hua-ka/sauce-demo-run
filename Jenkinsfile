@@ -1,4 +1,5 @@
 pipeline {
+    
     agent {
         docker {
             image 'mcr.microsoft.com/playwright:v1.57.0-noble'
@@ -6,12 +7,15 @@ pipeline {
             label 'docker-agent'
         }
     }
+
     options { timestamps() }
+    
     tools {
         nodejs 'Node_20' 
     }
 
     stages {
+
         stage('Clean workspace') { steps { cleanWs() } }
 
         stage('Checkout source code') { steps { checkout scm } }
@@ -25,6 +29,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Install Dependencies') {
             steps {
                 sh '''
@@ -37,6 +42,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Run Playwright Tests') {
             steps {
                 sh 'npx playwright test'
@@ -44,6 +50,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
