@@ -5,6 +5,7 @@ import { ProductsPage } from '../src/page-objects/productsPage';
 import { YourCartPage } from '../src/page-objects/yourCartPage';
 import { CheckoutPage } from '../src/page-objects/checkoutPage';
 import { CheckoutOverviewPage } from '../src/page-objects/checkoutOverviewPage';
+import { argosScreenshot } from "@argos-ci/playwright";
 
 test.beforeEach(async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');
@@ -15,6 +16,7 @@ test('complete purchase flow with first item from the page', async ({ page }) =>
     const loginPage = new LoginPage(page);
     const { username, password } = users.standard_user;
     await loginPage.loginWithCorrectCreds(username, password);
+    await argosScreenshot(page, "Product page");
 
     // Add first item to cart
     const productsPage = new ProductsPage(page);
@@ -30,11 +32,12 @@ test('complete purchase flow with first item from the page', async ({ page }) =>
 
     // Fill in checkout information
     const checkoutPage = new CheckoutPage(page);
-    expect(checkoutPage.isOnYourCartPage()).toBeTruthy();
+    expect(checkoutPage.isOnYourCheckoutPage()).toBeTruthy();
     await checkoutPage.fillCheckoutInfo('John', 'Doe', '12345');
 
     // Finish purchase
     const checkoutOverviewPage = new CheckoutOverviewPage(page);
     expect(checkoutOverviewPage.isOnCheckoutOverviewPage()).toBeTruthy();
+    await argosScreenshot(page, "Checkout Review page");
     await checkoutOverviewPage.finishPurchase();
 });

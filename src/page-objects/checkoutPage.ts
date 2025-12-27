@@ -15,7 +15,7 @@ export class CheckoutPage {
         this.continueButton = this.page.getByRole('button', { name: 'Continue' });
     }
 
-    async isOnYourCartPage(): Promise<boolean> {
+    async isOnYourCheckoutPage(): Promise<boolean> {
         return await this.page.getByText('Checkout: Your Information').isVisible();
     }
 

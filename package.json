@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:debug": "npx playwright test --debug",
+    "completePurchaseFlow": "npx playwright test purchase-complete-flow.spec.ts --project=chromium",
+    "loginFlow": "npx playwright test login-with-multiple-users.spec.ts --project=chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@argos-ci/playwright": "^6.3.8",
     "@playwright/test": "^1.57.0",
     "@types/node": "^24.10.1"
   }
