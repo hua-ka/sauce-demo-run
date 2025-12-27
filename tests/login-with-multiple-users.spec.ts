@@ -22,7 +22,7 @@ test.describe('Login Tests', () => {
         }); 
     }
 
-    test.only('successful login with valid users', async ({ page }) => {
+    test('successful login with valid users', async ({ page }) => {
         const { username, password } = users.standard_user;
         await loginPage.loginWithCorrectCreds(username, password);
         await argosScreenshot(page, "Login page");
